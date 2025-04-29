@@ -1,0 +1,8 @@
+# 🇬🇧 Ignore node_modules folder (npm packages)
+# 🇫🇷 Ignorer le dossier node_modules (paquets npm)
+node_modules/
+
+# 🇬🇧 Ignore environment and logs
+# 🇫🇷 Ignorer les fichiers d'environnement et de log
+.env
+*.log

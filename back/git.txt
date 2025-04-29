@@ -1,0 +1,40 @@
+
+
+
+initialiser Git dans le dossier front
+
+## git init
+
+------------------
+lier  dépôt distant 
+
+## git remote add origin https://github.com/nataswim/back_ns
+
+Puis vérifier 
+
+## git remote -v
+
+
+push des fichiers React vers GitHub
+
+Crée un .gitignore adapté 
+
+Ajoute les fichiers :
+## git add .
+Commit :
+## git commit -m "Initial commit "
+
+Et pousse :
+
+## git push -u origin main
+
+-------------------------
+solution brutale : forcer le push
+
+ignorer le commit déjà présent sur GitHub et tout remplacer avec  projet local 
+
+## git push --force origin main
+
+==>> Cela écrasera tout l’historique distant.
+
+
