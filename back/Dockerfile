@@ -38,3 +38,5 @@ COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
 # Installation des dependences
 COPY composer.json ./ 
 RUN composer install
+
+RUN php artisan storage:link || true
