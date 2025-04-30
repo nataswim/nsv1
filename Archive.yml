@@ -5,13 +5,13 @@ services:
     ports:
       - 8000:80
     volumes:
-      - /root/storage:/var/www/app/storage
+        - ~/storage:/var/www/app/storage
 
   vue-docker:
     container_name: react-docker
     build: ./front
     ports:
-      - 8080:80  # ← change 80:80 → 8080:80 pour éviter conflit
+      - 80:80
 
   mysql_db:
     image: mysql:latest
@@ -21,4 +21,4 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - /root/datadir:/var/lib/mysql
+      - ~/datadir:/var/lib/mysql
