@@ -5,8 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * 🇬🇧 Migration to create the "users" table, along with "password_reset_tokens" and "sessions" tables.
- * 🇫🇷 Migration pour créer la table "users", ainsi que les tables "password_reset_tokens" et "sessions".
+ * 🇬🇧 Migration to create the "users" table without foreign keys.
+ * 🇫🇷 Migration pour créer la table "users" sans clés étrangères.
  */
 return new class extends Migration
 {
@@ -49,9 +49,9 @@ return new class extends Migration
             // 🇫🇷 Token pour la fonctionnalité "Se souvenir de moi".
             $table->rememberToken();
 
-            // 🇬🇧 Foreign key referencing "roles" table (nullable, sets to null on delete).
-            // 🇫🇷 Clé étrangère vers la table "roles" (nullable, mise à null en cas de suppression).
-            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
+            // 🇬🇧 Add role_id column without foreign key constraint initially
+            // 🇫🇷 Ajouter la colonne role_id sans contrainte de clé étrangère initialement
+            $table->unsignedBigInteger('role_id')->nullable();
 
             // 🇬🇧 Timestamps (created_at, updated_at).
             // 🇫🇷 Horodatage (created_at, updated_at).
@@ -85,9 +85,9 @@ return new class extends Migration
             // 🇫🇷 Clé primaire (ID de session).
             $table->string('id')->primary();
 
-            // 🇬🇧 Foreign key referencing "users" table (nullable).
-            // 🇫🇷 Clé étrangère vers la table "users" (nullable).
-            $table->foreignId('user_id')->nullable()->index();
+            // 🇬🇧 Foreign key field without constraint initially
+            // 🇫🇷 Champ de clé étrangère sans contrainte initialement
+            $table->unsignedBigInteger('user_id')->nullable()->index();
 
             // 🇬🇧 IP address of the user (optional, max 45 characters).
             // 🇫🇷 Adresse IP de l'utilisateur (optionnelle, max 45 caractères).
