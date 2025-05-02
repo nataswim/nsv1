@@ -1,13 +1,16 @@
 FROM node:lts-alpine as build-stage
 
+# spécifier l'environnement
+ARG MODE=test
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-COPY .env.test .env
+COPY .env.${MODE} .env
 RUN npm run build
 
-# production stage
+# Production 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

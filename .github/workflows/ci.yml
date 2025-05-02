@@ -19,8 +19,14 @@ jobs:
 
       - name: Sleep for 10 seconds
         run: sleep 10s
-
-      # Laravel DB migrate & seed supprimés ici
+        shell: bash
+        
+      # migrations et dalimentation de la base de données
+      - name: Database migrate
+        run: docker exec laravel-docker bash -c "php artisan migrate --force"
+        
+      - name: Database seeding
+        run: docker exec laravel-docker bash -c "php artisan db:seed --force"
 
       - name: Install Node
         uses: actions/setup-node@v3
@@ -29,4 +35,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: back
+        
+      # tests
+      - name: Run tests
+        run: npm test
         working-directory: back

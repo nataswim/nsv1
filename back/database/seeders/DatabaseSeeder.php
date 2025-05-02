@@ -30,22 +30,19 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            // 🇬🇧 Call individual seeders
-            // 🇫🇷 Appeler les seeders individuels
-
-            //OK RoleSeeder::class, // 🇬🇧 Seeding roles / 🇫🇷 Peuplement des rôles
-            //OK UserSeeder::class, // 🇬🇧 Seeding users / 🇫🇷 Peuplement des utilisateurs
-            //OK UploadSeeder::class, // 🇬🇧 Seeding uploads / 🇫🇷 Peuplement des fichiers téléversés
-            //ok ExerciseSeeder::class, // 🇬🇧 Seeding exercises / 🇫🇷 Peuplement des exercices
-            //ok PageSeeder::class, // 🇬🇧 Seeding pages / 🇫🇷 Peuplement des pages
-            //ok PlanSeeder::class, // 🇬🇧 Seeding plans / 🇫🇷 Peuplement des plans
-            //ok WorkoutSeeder::class, // 🇬🇧 Seeding workouts / 🇫🇷 Peuplement des séances d'entraînement
-            //ok SwimSetSeeder::class, // 🇬🇧 Seeding swim sets / 🇫🇷 Peuplement des séries de natation
-            //ok MylistSeeder::class, // 🇬🇧 Seeding personal lists / 🇫🇷 Peuplement des listes personnelles
-            //ok MylistItemSeeder::class, // 🇬🇧 Seeding personal list items / 🇫🇷 Peuplement des éléments de listes personnelles
-            //ok PlanWorkoutSeeder::class, // 🇬🇧 Seeding plan-workout relationships / 🇫🇷 Peuplement des relations plan-séance
-            //ok WorkoutExerciseSeeder::class, // 🇬🇧 Seeding workout-exercise relationships / 🇫🇷 Peuplement des relations séance-exercice
-            //ok WorkoutSwimSetSeeder::class, // 🇬🇧 Seeding workout-swim set relationships / 🇫🇷 Peuplement des relations séance-série de natation
+            RoleSeeder::class,
+            UserSeeder::class,
+            UploadSeeder::class,
+            ExerciseSeeder::class,
+            PageSeeder::class,
+            PlanSeeder::class,
+            WorkoutSeeder::class,
+            SwimSetSeeder::class,
+            MylistSeeder::class,
+            MylistItemSeeder::class,
+            PlanWorkoutSeeder::class,
+            WorkoutExerciseSeeder::class,
+            WorkoutSwimSetSeeder::class,
         ]);
     }
 }
