@@ -5,16 +5,16 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Mylist;
-use App\Models\MylistItem;
+use App\Models\MyListItem;
 use App\Models\Exercise;
 use App\Models\Workout;
 use App\Models\Plan;
 
 /**
- * 🇬🇧 MylistItemSeeder class for populating the "mylist_items" table.
- * 🇫🇷 Classe MylistItemSeeder pour le peuplement de la table "mylist_items".
+ * 🇬🇧 MyListItemSeeder class for populating the "mylist_items" table.
+ * 🇫🇷 Classe MyListItemSeeder pour le peuplement de la table "mylist_items".
  */
-class MylistItemSeeder extends Seeder
+class MyListItemSeeder extends Seeder
 {
     /**
      * 🇬🇧 Run the database seeds.
@@ -42,7 +42,7 @@ class MylistItemSeeder extends Seeder
             // 🇬🇧 Add an exercise to the list.
             // 🇫🇷 Ajouter un exercice à la liste.
             if ($exercises->isNotEmpty()) {
-                MylistItem::create([
+                MyListItem::create([
                     'mylist_id' => $mylist->id,
                     'item_id' => $exercises->random()->id,
                     'item_type' => 'App\Models\Exercise',
@@ -52,7 +52,7 @@ class MylistItemSeeder extends Seeder
             // 🇬🇧 Add a workout to the list.
             // 🇫🇷 Ajouter une séance d'entraînement à la liste.
             if ($workouts->isNotEmpty()) {
-                MylistItem::create([
+                MyListItem::create([
                     'mylist_id' => $mylist->id,
                     'item_id' => $workouts->random()->id,
                     'item_type' => 'App\Models\Workout',
@@ -62,7 +62,7 @@ class MylistItemSeeder extends Seeder
             // 🇬🇧 Add a plan to the list.
             // 🇫🇷 Ajouter un plan à la liste.
             if ($plans->isNotEmpty()) {
-                MylistItem::create([
+                MyListItem::create([
                     'mylist_id' => $mylist->id,
                     'item_id' => $plans->random()->id,
                     'item_type' => 'App\Models\Plan',
