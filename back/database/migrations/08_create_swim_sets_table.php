@@ -1,4 +1,3 @@
-// File: 09_create_swim_sets_table.php
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -6,8 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * 🇬🇧 Migration to create the "swim_sets" table without foreign key constraints.
- * 🇫🇷 Migration pour créer la table "swim_sets" sans contraintes de clé étrangère.
+ * 🇬🇧 Migration to create the "swim_sets" table.
+ * 🇫🇷 Migration pour créer la table "swim_sets".
  */
 return new class extends Migration
 {
@@ -22,10 +21,13 @@ return new class extends Migration
             // 🇫🇷 Clé primaire (auto-incrémentée).
             $table->bigIncrements('id');
 
-            // 🇬🇧 Foreign key fields without constraints
-            // 🇫🇷 Champs de clé étrangère sans contraintes
-            $table->unsignedBigInteger('workout_id')->nullable();
-            $table->unsignedBigInteger('exercise_id')->nullable();
+            // 🇬🇧 Foreign key referencing "workouts" table (nullable).
+            // 🇫🇷 Clé étrangère vers la table "workouts" (nullable).
+            $table->foreignId('workout_id')->nullable()->constrained('workouts')->onDelete('cascade');
+
+            // 🇬🇧 Foreign key referencing "exercises" table (nullable, sets to null on delete).
+            // 🇫🇷 Clé étrangère vers la table "exercises" (nullable, mise à null en cas de suppression).
+            $table->foreignId('exercise_id')->nullable()->constrained('exercises')->onDelete('set null');
 
             // 🇬🇧 Distance of the swim set (optional).
             // 🇫🇷 Distance de la série de natation (optionnelle).

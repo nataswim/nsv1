@@ -5,8 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * 🇬🇧 Migration to create the "exercises" table without foreign key constraints.
- * 🇫🇷 Migration pour créer la table "exercises" sans contraintes de clé étrangère.
+ * 🇬🇧 Migration to create the "exercises" table.
+ * 🇫🇷 Migration pour créer la table "exercises".
  */
 return new class extends Migration
 {
@@ -37,10 +37,13 @@ return new class extends Migration
             // 🇫🇷 Catégorie de l'exercice (optionnelle).
             $table->string('exercise_category')->nullable();
 
-            // 🇬🇧 Foreign key fields without constraints
-            // 🇫🇷 Champs de clé étrangère sans contraintes
-            $table->unsignedBigInteger('upload_id')->nullable();
-            $table->unsignedBigInteger('user_id');
+            // 🇬🇧 Foreign key referencing "uploads" table (nullable, sets to null on delete).
+            // 🇫🇷 Clé étrangère vers la table "uploads" (nullable, mise à null en cas de suppression).
+            $table->foreignId('upload_id')->nullable()->constrained('uploads')->onDelete('set null');
+
+            // 🇬🇧 Foreign key referencing "users" table.
+            // 🇫🇷 Clé étrangère vers la table "users".
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
 
             // 🇬🇧 Timestamps (created_at, updated_at).
             // 🇫🇷 Horodatage (created_at, updated_at).
