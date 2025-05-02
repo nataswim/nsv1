@@ -1,0 +1,33 @@
+# github/workflows/deploy.yml Déploiement avec GitHub Configuration du workflow GitHub Actions 
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to VPS
+        run: |
+          ssh -o StrictHostKeyChecking=no root@168.231.107.219 '
+            cd /root &&
+            git clone https://github.com/nataswim/nsv1.git ||
+            (cd /root/nsv1 && git pull) &&
+            cd /root/nsv1 &&
+            docker-compose down &&
+            docker-compose build --no-cache &&
+            docker-compose up -d &&
+            docker exec laravel-docker php artisan migrate --force &&
+            docker exec laravel-docker php artisan storage:link
+          '
