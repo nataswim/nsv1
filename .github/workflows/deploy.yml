@@ -45,4 +45,8 @@ jobs:
         host: 168.231.107.219
         username: deployer
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+<<<<<<< Updated upstream
         script: /var/www/deploy/deploy.sh
+=======
+        script: /var/www/deploy/deploy.sh
+>>>>>>> Stashed changes
