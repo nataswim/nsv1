@@ -1,42 +1,36 @@
-#  linux avec Apache et PHP 8.3
-FROM php:8.3-apache
+FROM php:8.3-fpm
 
-# Ajout d'un argument pour spécifier l'environnement
-ARG MODE=test
-
-# Installation des dépendances PHP
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libfreetype-dev \
-    libjpeg62-turbo-dev \
+    git \
+    curl \
     libpng-dev \
-    zlib1g-dev \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install mysqli pdo pdo_mysql
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
 
-# Copie des fichiers locaux vers le conteneur
-COPY . /var/www/app
-# répertoire courant
-WORKDIR /var/www/app
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Copie de l'environnement 
-COPY .env.${MODE} /var/www/app/.env
-COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN a2enmod rewrite headers env dir mime authz_host authz_core
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN chown -R www-data:www-data /var/www/app \
-    && chmod -R 775 /var/www/app/storage
+# Set working directory
+WORKDIR /var/www
 
-# Installation de composer
-ENV COMPOSER_ALLOW_SUPERUSER=1
-COPY --from=composer:2.6.5 /usr/bin/composer /usr/local/bin/composer
+# Copy application files
+COPY . .
 
-# Installation des dépendances
-COPY composer.json ./
-RUN composer install
+# Install dependencies
+RUN composer install --optimize-autoloader --no-dev
 
-RUN php artisan storage:link || true
+# Set permissions
+RUN chown -R www-data:www-data /var/www
+
+EXPOSE 9000
+
+CMD ["php-fpm"]

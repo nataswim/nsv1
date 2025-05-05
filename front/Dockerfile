@@ -1,18 +1,25 @@
-FROM node:lts-alpine as build-stage
-
-# spécifier l'environnement
-ARG MODE=test
+# Étape de build
+FROM node:20 as build
 
 WORKDIR /app
+
 COPY package*.json ./
+
 RUN npm install
+
 COPY . .
-COPY .env.${MODE} .env
+
 RUN npm run build
 
-# Production 
-FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Étape de production avec Nginx
+FROM nginx:alpine
+
+# Copier la configuration Nginx personnalisée
+COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Copier les fichiers construits depuis l'étape de build
+COPY --from=build /app/build /usr/share/nginx/html
+
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
